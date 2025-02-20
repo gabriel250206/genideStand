@@ -1,0 +1,7 @@
+{
+  "name": "genideStand",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
