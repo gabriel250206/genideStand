@@ -15,10 +15,12 @@
 
   <div id="container">
     <div id="content">
-    <input type="text" placeholder="pregunta">
+    <input type="text" placeholder="pregunta" style="color: black;" #preguntaInput>
     <br>
     <br>
-    <button>Enviar pregunta</button>
+    <button 
+    (click)="addItem(preguntaInput.value); preguntaInput.value = ''; "
+    >Enviar pregunta</button>
     <br>
     <br>
     <input type="text" placeholder="respuesta" readonly>

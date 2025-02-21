@@ -12,6 +12,24 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 })
 export class SignUpPage implements OnInit {
 
+  items: { username: string; password: string }[] = [];
+  
+
+  // Agregar un elemento con nombre, fecha y estado inicial (no completado)
+  addItem(username: string,  password:string,): void {
+   if (username.trim() && password.trim() ) {
+     this.items.push({
+       
+       username: username.trim(),
+       password: password.trim(),
+       
+       
+       
+     });
+     console.log(username.trim(), password.trim());
+   } else {
+     console.error('El nombre y la fecha no pueden estar vacíos');
+   }}
   constructor() { }
 
   ngOnInit() {

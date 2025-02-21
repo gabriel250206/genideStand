@@ -11,7 +11,21 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class ForgotPasswordPage implements OnInit {
-
+  items: { email: string;}[] = [];
+  addItem(email: string,  ): void {
+    if (email.trim() ) {
+      this.items.push({
+        
+        email: email.trim(),
+       
+        
+        
+        
+      });
+      console.log(email.trim());
+    } else {
+      console.error('El nombre y la fecha no pueden estar vacíos');
+    }}
   constructor() { }
 
   ngOnInit() {
