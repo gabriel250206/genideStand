@@ -15,15 +15,28 @@
 
   <div id="container">
     <div id="content">
-    <input type="text" placeholder="pregunta" style="color: black;" #preguntaInput>
+    <input type="text" placeholder="pregunta" style="color: black;" #preguntaInput [(ngModel)]="ideaPrompt">
     <br>
     <br>
     <button 
-    (click)="addItem(preguntaInput.value); preguntaInput.value = ''; "
+    (click)="generateIdea(); "
     >Enviar pregunta</button>
     <br>
     <br>
-    <input type="text" placeholder="respuesta" readonly>
+    
     </div>
   </div>
+
+  <ion-card *ngIf="generateIdea">
+    <ion-card-header>
+      <ion-card-title>
+        <b>respuesta</b>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p style="color: yellow;">{{generatedIdea}}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+

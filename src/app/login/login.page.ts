@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton } from '@ionic/angular/standalone';
-
+import {AlertController} from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -11,27 +12,55 @@ import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton } from '@ionic/an
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonButton]
 })
 export class LoginPage implements OnInit {
-  items: { username: string; password: string }[] = [];
   
+  
+  constructor(private alertController: AlertController, private router: Router) { }
 
-  // Agregar un elemento con nombre, fecha y estado inicial (no completado)
-  addItem(username: string,  password:string,): void {
-   if (username.trim() && password.trim() ) {
-     this.items.push({
-       
-       username: username.trim(),
-       password: password.trim(),
-       
-       
-       
-     });
-     console.log(username.trim(), password.trim());
-   } else {
-     console.error('El nombre y la fecha no pueden estar vacíos');
-   }}
-  constructor() { }
+ngOnInit() {
+}
 
-  ngOnInit() {
-  }
+// Función que se ejecuta al hacer submit del formulario
+  email='';
+  password='';
+async onSubmit() {
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+    const password = (document.getElementById('password') as HTMLInputElement).value;
+
+    // Si el email y password son válidos, muestra un mensaje de éxito
+    if (this.validateEmail(email) && password) {
+        const alert = await this.alertController.create({
+            header: 'Login Success',
+            message: 'You have logged in successfully!',
+            buttons: ['OK']
+            
+        });
+        this.router.navigateByUrl("home");
+        await alert.present();
+    } else {
+        const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'Please check your credentials.',
+            buttons: ['OK']
+        });
+
+        await alert.present();
+    }
+}
+  
+validateEmail(email: string): boolean {
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailPattern.test(email); // Retorna true si el correo es válido
+}
+
+// Función para navegación
+onSignUp() {
+  this.router.navigateByUrl("sign-up");
+}
+
+// Función para navegación
+onReset() {
+  this.router.navigateByUrl("forgot-password");
+}
+
 
 }

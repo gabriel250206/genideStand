@@ -1,30 +1,29 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent,IonCard,IonCardHeader,IonCardContent,IonCardTitle } from '@ionic/angular/standalone';
+import { OpenaiService } from '../openai.service';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent,FormsModule,IonCard,IonCardHeader,IonCardContent,IonCardTitle,NgIf],
 })
 export class HomePage {
-  items: { pregunta: string; }[] = [];
-  
+  constructor(private router:Router, private openaiservice:OpenaiService) {}
+  ideaPrompt: string='';
+  generatedIdea: string='idea';
 
- // Agregar un elemento con nombre, fecha y estado inicial (no completado)
- addItem(pregunta: string,  ): void {
-  if (pregunta.trim() ) {
-    this.items.push({
-      
-      pregunta: pregunta.trim(),
-   
-      
-      
-      
-    });
-    console.log(pregunta.trim());
-  } else {
-    console.error('El nombre y la fecha no pueden estar vacíos');
-  }}
-  constructor() {}
+  async generateIdea(){
+    if(this.ideaPrompt.trim()){
+      this.generatedIdea = await this.openaiservice.generateIdea(this.ideaPrompt);
+      console.log(this.ideaPrompt);
+    }else{
+      alert("incresa algo pls");
+    }
+  }
+ 
 }
