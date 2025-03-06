@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.page.html',
@@ -12,23 +13,17 @@ import { Router } from '@angular/router';
 })
 
 export class ForgotPasswordPage implements OnInit {
-  items: { email: string;}[] = [];
-  addItem(email: string,  ): void {
-    if (email.trim() ) {
-      this.items.push({
-        
-        email: email.trim(),
-       
-        
-        
-        
-      });
-      console.log(email.trim());
-    } else {
-      console.error('El nombre y la fecha no pueden estar vacíos');
-    }}
-  constructor(private router:Router) { }
+ 
+  
 
+  constructor(private router:Router, private auth:AuthService) { }
+  
+
+  onResetPassword() {
+     const email = (document.getElementById('email') as HTMLInputElement).value;
+    this.auth.reset(email);
+    console.log(email);
+  }
 
   onLogin() {
     this.router.navigateByUrl("login");
