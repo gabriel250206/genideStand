@@ -4,17 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton } from '@ionic/angular/standalone';
 import {AlertController} from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonButton]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,]
 })
 export class LoginPage implements OnInit {
   
   
-  constructor(private alertController: AlertController, private router: Router) { }
+  constructor(private alertController: AlertController, private router: Router, private auth:AuthService) { }
 
 ngOnInit() {
 }
@@ -27,7 +28,7 @@ async onSubmit() {
     const password = (document.getElementById('password') as HTMLInputElement).value;
 
     // Si el email y password son válidos, muestra un mensaje de éxito
-    if (this.validateEmail(email) && password) {
+    if ( await this.auth.login(email, password)) {
         const alert = await this.alertController.create({
             header: 'Login Success',
             message: 'You have logged in successfully!',

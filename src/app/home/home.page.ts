@@ -4,6 +4,7 @@ import { OpenaiService } from '../openai.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { NgIf } from '@angular/common';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent,FormsModule,IonCard,IonCardHeader,IonCardContent,IonCardTitle,NgIf],
 })
 export class HomePage {
-  constructor(private router:Router, private openaiservice:OpenaiService) {}
+  constructor(private router:Router, private openaiservice:OpenaiService, private auth:AuthService) {}
   ideaPrompt: string='';
   generatedIdea: string='idea';
 
@@ -24,6 +25,10 @@ export class HomePage {
     }else{
       alert("incresa algo pls");
     }
+  }
+  async logout(){
+    await this.auth.logout();
+    this.router.navigateByUrl('login');
   }
  
 }
